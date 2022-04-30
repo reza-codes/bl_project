@@ -23,10 +23,10 @@ class StreamPage extends StatefulWidget {
   const StreamPage({required this.server, Key? key}) : super(key: key);
 
   @override
-  _StreamPageState createState() => _StreamPageState();
+  _StreamPage createState() => _StreamPage();
 }
 
-class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
+class _StreamPage extends State<StreamPage> with WidgetsBindingObserver {
   BluetoothConnection? connection;
   bool isConnecting = true;
   bool get isConnected => (connection?.isConnected ?? false);
@@ -40,7 +40,7 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
   bool isDisconnecting = false;
   bool allowSendDataOnResume = false;
 
-  String? recivedData;
+  String? receivedData;
   int counter = 0;
 
   DateTime now = DateTime.now();
@@ -50,7 +50,7 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
   Location location = Location();
   late LocationData _currentPosition;
 
-  // Twilio serivice
+  // Twilio service
   TwilioFlutter? twilioFlutter;
 
   initStream() async {
@@ -66,7 +66,7 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
       controller?.addStream(connectionStream!);
     } catch (e, s) {
       if (kDebugMode) {
-        print('Cannot connect, exception occured');
+        print('Cannot connect, exception occurred');
       }
       if (kDebugMode) {
         print(e);
@@ -132,17 +132,17 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
     );
 
     stream?.listen((event) {
-      recivedData = ascii.decode(event);
-      if (recivedData == null) {
+      receivedData = ascii.decode(event);
+      if (receivedData == null) {
         if (kDebugMode) {
           print("No Fall Detected");
         }
       } else {
         if (kDebugMode) {
-          print(recivedData);
+          print(receivedData);
         }
 
-        if (recivedData?.trim() == 'Fall Detected') {
+        if (receivedData?.trim() == 'Fall Detected') {
           sendDataToFirebase();
         }
       }
@@ -167,16 +167,16 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     if (AppLifecycleState.paused == state) {
       stream?.last.then((value) async {
-        recivedData = ascii.decode(value);
-        if (recivedData == null) {
+        receivedData = ascii.decode(value);
+        if (receivedData == null) {
           if (kDebugMode) {
             print("No Fall Detected");
           }
         } else {
           if (kDebugMode) {
-            print(recivedData);
+            print(receivedData);
           }
-          if (recivedData?.trim() == 'Fall Detected') {
+          if (receivedData?.trim() == 'Fall Detected') {
             sendDataToFirebase();
           }
         }
@@ -222,20 +222,20 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
               child: const MapWidget(),
             ),
             const SizedBox(height: 15),
-            recivedData == null
+            receivedData == null
                 ? const Text(
                     "No Fall Detected",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0, color: Colors.green),
                   )
                 : Text(
-                    "$counter ${recivedData.toString().trim()}",
+                    "$counter ${receivedData.toString().trim()}",
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0, color: Colors.red),
                   ),
             const SizedBox(height: 15),
             StatefulBuilder(
               builder: (BuildContext context, StateSetter setStateBuilder) {
                 return StreamBuilder(
-                  stream: currnetTime(setStateBuilder),
+                  stream: currentTime(setStateBuilder),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       formattedDate = DateFormat('kk:mm:ss \n EEE d MMM').format(snapshot.data);
@@ -255,7 +255,7 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
     });
   }
 
-  Stream<DateTime> currnetTime(StateSetter setStateBuilder) async* {
+  Stream<DateTime> currentTime(StateSetter setStateBuilder) async* {
     await Future.delayed(const Duration(seconds: 1));
     now = DateTime.now();
     yield now;

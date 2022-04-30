@@ -9,8 +9,6 @@ import 'stream_page.dart';
 import '../providers/blu_state_provider.dart';
 
 class SelectBondedDevicePage extends StatefulWidget {
-  /// If true, on page start there is performed discovery upon the bonded devices.
-  /// Then, if they are not avaliable, they would be disabled from the selection.
   final bool checkAvailability;
 
   const SelectBondedDevicePage({this.checkAvailability = false, Key? key}) : super(key: key);

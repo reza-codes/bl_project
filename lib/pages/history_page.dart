@@ -24,7 +24,7 @@ class _HistoryPageState extends State<HistoryPage> with AutomaticKeepAliveClient
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: FirestoreRepository.readFallDectected(),
+        stream: FirestoreRepository.readFallDetected(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

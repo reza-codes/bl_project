@@ -26,7 +26,7 @@ class FirestoreRepository {
   }
 
   // get fall detections
-  static Stream<List<FallDetectModel>> readFallDectected() {
+  static Stream<List<FallDetectModel>> readFallDetected() {
     try {
       return FirebaseFirestore.instance.collection('users').doc(user!.uid).snapshots().map((snapshot) {
         fallDetectList.clear();
@@ -130,7 +130,7 @@ class FirestoreRepository {
     docUser.update({'erContact': FieldValue.arrayUnion(list)});
   }
 
-  // creat a new user
+  // create a new user
   static createUser() async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid);
 
