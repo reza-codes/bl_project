@@ -23,10 +23,10 @@ class StreamPage extends StatefulWidget {
   const StreamPage({required this.server, Key? key}) : super(key: key);
 
   @override
-  _StreamPage createState() => _StreamPage();
+  _StreamPageState createState() => _StreamPageState();
 }
 
-class _StreamPage extends State<StreamPage> with WidgetsBindingObserver {
+class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
   BluetoothConnection? connection;
   bool isConnecting = true;
   bool get isConnected => (connection?.isConnected ?? false);
