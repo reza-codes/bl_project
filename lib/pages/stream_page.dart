@@ -278,13 +278,21 @@ class _StreamPageState extends State<StreamPage> with WidgetsBindingObserver {
           if (kDebugMode) {
             print(element.phoneNumber);
           }
-          await twilioFlutter?.sendSMS(
-            toNumber: '+1${element.phoneNumber}',
-            messageBody: '''Fall detected!
+
+          try {
+            await twilioFlutter?.sendSMS(
+              toNumber: '+1${element.phoneNumber}',
+              messageBody: '''Fall detected!
 Location:
 $url
       ''',
-          );
+            );
+          } catch (e, s) {
+            if (kDebugMode) {
+              print(e);
+              print(s);
+            }
+          }
         }
       }
 
@@ -292,7 +300,7 @@ $url
         print("Current location: $_latLng");
       }
       if (kDebugMode) {
-        print("Currnet Data and Time : $now");
+        print("Current Data and Time : $now");
       }
 
       FallDetectModel fallDetectModel = FallDetectModel(
@@ -303,7 +311,7 @@ $url
       );
 
       FirestoreRepository.fallDetectList.add(fallDetectModel);
-      FirestoreRepository.addFallDectected();
+      FirestoreRepository.addFallDetected();
 
       setState(() {
         counter++;

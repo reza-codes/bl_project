@@ -12,7 +12,7 @@ class FirestoreRepository {
   static fb.User? user = fb.FirebaseAuth.instance.currentUser;
 
   // add new fall detection
-  static addFallDectected() async {
+  static addFallDetected() async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid);
 
     List<Map> list = [];
