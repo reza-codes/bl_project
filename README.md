@@ -18,6 +18,16 @@ TODO:
 + Add the mac addresses in constants/app_constants.dart.
 
 
+- Components:
++ ESP-32 microcontroller
++ MPU-6050 Sensor
++ Bluetooth Radio and Baseband
+
+ - Bluetooth Interface 
+• Provides UART HCI interface, up to 4 Mbps 
+• Provides SDIO/SPI HCI interface 
+• Provides PCM/I2S audio interface 
+
 ### Screenshots
 
 
